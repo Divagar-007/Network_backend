@@ -70,6 +70,7 @@ def upload_avatar(
             os.remove(old)
 
     current_user.profile_picture = f"/uploads/{filename}"
+
     db.commit()
     db.refresh(current_user)
     return current_user

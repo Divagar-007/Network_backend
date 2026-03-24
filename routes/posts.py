@@ -99,12 +99,13 @@ def upload_post_image(
     ext      = file.filename.rsplit(".", 1)[-1]
     filename = f"post_{uuid.uuid4().hex}.{ext}"
     dest     = os.path.join(UPLOAD_DIR, filename)
+
     with open(dest, "wb") as buf:
         shutil.copyfileobj(file.file, buf)
 
     post.image_url = f"/uploads/{filename}"
     db.commit()
-    return {"image_url": post.image_url}
+    return _build_post_out(post, current_user.id)
 
 
 # ── Like / Unlike ─────────────────────────────────────────────────────────────
